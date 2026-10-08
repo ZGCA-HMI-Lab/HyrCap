@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="HyrCap: Hybrid Rank-Calibration of Action Proposals for Temporal Event Understanding. Official project page.">
+  <meta property="og:title" content="HyrCap: Hybrid Rank-Calibration of Action Proposals for Temporal Event Understanding">
+  <meta property="og:description" content="Method overview and video demonstrations of HyrCap.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zgca-hmi-lab.github.io/HyrCap/assets/paper-overview.png">
+  <meta property="og:url" content="https://zgca-hmi-lab.github.io/HyrCap/">
+  <link rel="canonical" href="https://zgca-hmi-lab.github.io/HyrCap/">
+  <title>HyrCap</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css?v=4">
+  <script src="app.js?v=4" defer></script>
+</head>
+<body>
+  <a data-en="Skip to content" data-zh="跳转到正文" class="skip-link" href="#main">Skip to content</a>
+  <header class="paper-header container">
+    <div class="language-control">
+      <button id="language-toggle" type="button" aria-label="Switch to Chinese">中文</button>
+    </div>
+    <h1><span class="paper-name">HyrCap:</span> Hybrid Rank-Calibration of Action Proposals for Temporal Event Understanding</h1>
+    <p class="authors"><span>Rui Chen<sup>1</sup></span><span>Xingyu Chen<sup>2</sup></span><span>Pengxin Xu<sup>2,5</sup></span><span>Kai Chen<sup>2,3,4</sup></span><span>Junzhi Yu<sup>1</sup></span></p>
+    <p class="affiliations"><span><sup>1</sup> Peking University</span><span><sup>2</sup> Zhongguancun Academy</span><span><sup>3</sup> Zhongguancun Institute of Artificial Intelligence</span><span><sup>4</sup> DeepCybo</span><span><sup>5</sup> Harbin Institute of Technology, Shenzhen</span></p>
+    <p class="venue">NeurIPS 2026</p>
+    <nav class="paper-links" aria-label="Project links">
+      <a href="https://github.com/ZGCA-HMI-Lab/HyrCap" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.64-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+        <span data-en="Code" data-zh="代码">Code</span>
+      </a>
+      <a href="#abstract"><span data-en="Abstract" data-zh="摘要">Abstract</span></a>
+      <a href="#upload-demo"><span data-en="Demo" data-zh="演示">Demo</span></a>
+      <a href="#results"><span data-en="Results" data-zh="实验结果">Results</span></a>
+      <a href="#videos"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7Z" fill="currentColor"/></svg><span data-en="Videos" data-zh="视频">Videos</span></a>
+      <a href="#method"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2h8l4 4v12H4zM11 2v5h5M7 11h6M7 14h6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span data-en="Method" data-zh="方法">Method</span></a>
+    </nav>
+  </header>
+
+  <main id="main" class="container">
+
+    <section class="section teaser-section" aria-label="HyrCap overview">
+      <figure class="paper-figure teaser-figure" data-source-page="1" data-source-figure="1">
+        <a href="assets/paper-overview.png" target="_blank" rel="noopener" aria-label="View full-size overview">
+          <img src="assets/paper-overview.png" width="1344" height="447" alt="HyrCap and a conventional query-based detector produce temporal proposals for downstream semantic understanding." fetchpriority="high">
+        </a>
+        <figcaption data-en="HyrCap calibrates dense action proposals to provide more reliable event segments for semantic understanding. Figure 1." data-zh="HyrCap 对密集动作候选进行校准，为语义理解提供更可靠的事件片段。论文图 1。">HyrCap calibrates dense action proposals to provide more reliable event segments for semantic understanding. Figure 1.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section walkthrough-section" id="upload-demo" aria-labelledby="walkthrough-title">
+      <h2 id="walkthrough-title" data-en="Video Event Segmentation" data-zh="视频事件切分">Video Event Segmentation</h2>
+      <figure class="walkthrough-figure">
+        <video id="upload-walkthrough" controls muted loop playsinline preload="metadata" poster="assets/upload-walkthrough.jpg" aria-label="Accelerated replay of basketball video encoding and event results" data-label-en="Accelerated replay of basketball video encoding and event results" data-label-zh="篮球视频编码与事件结果的加速回放">
+          <source src="assets/upload-walkthrough.mp4" type="video/mp4">
+          <a href="assets/upload-walkthrough.gif" data-en="View the GIF replay" data-zh="查看 GIF 回放">View the GIF replay</a>
+        </video>
+        <figcaption>
+          <span data-en="Recorded experimental upload run. Processing is condensed; event playback is 3×." data-zh="实验性上传任务的记录回放；编码等待过程已压缩，事件片段以 3 倍速播放。">Recorded experimental upload run. Processing is condensed; event playback is 3×.</span>
+          <span class="walkthrough-downloads"><a href="assets/upload-walkthrough.gif" download data-en="Download GIF" data-zh="下载 GIF">Download GIF</a><a href="assets/upload-walkthrough.mp4" target="_blank" rel="noopener" data-en="Open video" data-zh="打开视频">Open video</a></span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section abstract-section" id="abstract" aria-labelledby="abstract-title">
+      <h2 data-en="Abstract" data-zh="摘要" id="abstract-title">Abstract</h2>
+      <div class="reading-width">
+        <p data-en="Temporal action detection in long, untrimmed videos is challenged by ambiguous boundaries, inaccurate localization, and redundant proposals. Reliable action proposals are also an important interface between event localization and semantic understanding. HyrCap is a proposal-centric, query-based framework that treats dense predictions as an over-complete set of temporal event hypotheses and calibrates their ranking to better reflect localization reliability and competition between candidates." data-zh="长时未裁剪视频中的时序动作检测面临边界模糊、定位不准确和候选冗余等问题。可靠的动作候选也是连接事件定位与语义理解的重要接口。HyrCap 是一个以候选为中心、基于查询的框架，将密集预测视为过完备的时序事件假设集合，并校准其排序，使候选置信度更准确地反映定位可靠性和候选之间的竞争关系。">Temporal action detection in long, untrimmed videos is challenged by ambiguous boundaries, inaccurate localization, and redundant proposals. Reliable action proposals are also an important interface between event localization and semantic understanding. HyrCap is a proposal-centric, query-based framework that treats dense predictions as an over-complete set of temporal event hypotheses and calibrates their ranking to better reflect localization reliability and competition between candidates.</p>
+        <p data-en="By combining InternVideo2 and V-JEPA2 representations, HyrCap uses cross-representation consensus, localization quality estimation, and proposal redundancy suppression to improve candidate ranking. Temporal voting refines the boundaries, followed by multi-class non-maximum suppression. We evaluate standard action detection on THUMOS14, ActivityNet v1.3, and HACS-Segment, and introduce a staged protocol that evaluates category-agnostic localization, segment-level semantics, and their joint event-understanding performance separately." data-zh="HyrCap 结合 InternVideo2 与 V-JEPA2 的互补表示，通过跨表示一致性、定位质量估计和候选冗余抑制改善候选排序，再通过时序边界投票和多类别非极大值抑制得到检测结果。论文在 THUMOS14、ActivityNet v1.3 和 HACS-Segment 上评测标准动作检测，并提出分阶段协议，分别评估类别无关定位、片段级语义理解及二者结合的事件理解表现。">By combining InternVideo2 and V-JEPA2 representations, HyrCap uses cross-representation consensus, localization quality estimation, and proposal redundancy suppression to improve candidate ranking. Temporal voting refines the boundaries, followed by multi-class non-maximum suppression. We evaluate standard action detection on THUMOS14, ActivityNet v1.3, and HACS-Segment, and introduce a staged protocol that evaluates category-agnostic localization, segment-level semantics, and their joint event-understanding performance separately.</p>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method" aria-labelledby="method-title">
+      <h2 data-en="Method Overview" data-zh="方法概览" id="method-title">Method Overview</h2>
+      <figure class="architecture" data-source-page="6" data-source-figure="3">
+        <a href="assets/paper-method.png" target="_blank" rel="noopener" aria-label="View full-size HyrCap architecture">
+          <img src="assets/paper-method.png" width="1467" height="1017" alt="HyrCap architecture: candidate generation, cross-representation consensus calibration, localization quality estimation, proposal redundant suppression, and temporal event understanding." loading="lazy">
+        </a>
+        <figcaption>
+          <strong data-en="HyrCap architecture." data-zh="HyrCap 方法框架。">HyrCap architecture.</strong>
+          <span data-en="HyrCap combines cross-representation consensus calibration, localization quality estimation, proposal redundancy suppression, and temporal boundary refinement. Figure 3." data-zh="HyrCap 结合跨表示一致性校准、定位质量估计、候选冗余抑制与时序边界细化。论文图 3。">HyrCap combines cross-representation consensus calibration, localization quality estimation, proposal redundancy suppression, and temporal boundary refinement. Figure 3.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+
+    <section class="section results-section" id="results" aria-labelledby="results-title">
+      <h2 data-en="Main Results" data-zh="主要实验结果" id="results-title">Main Results</h2>
+      <p data-en="Class-specific temporal action detection. Selected comparisons reported in Tables 1–2 of the paper." data-zh="类别相关的时序动作检测。以下为论文表 1–2 中的部分方法对比。" class="section-intro">Class-specific temporal action detection. Selected comparisons reported in Tables 1–2 of the paper.</p>
+      <div class="table-scroll" role="region" aria-labelledby="benchmark-caption" tabindex="0">
+        <table id="benchmark-results" class="results-table" data-source-tables="1,2" data-source-pages="8,9">
+          <caption id="benchmark-caption"><span data-en="Average detection mAP (%)" data-zh="平均检测 mAP（%）">Average detection mAP (%)</span></caption>
+          <thead><tr><th scope="col"><span data-en="Method" data-zh="方法">Method</span></th><th scope="col"><span data-en="Features" data-zh="特征">Features</span></th><th scope="col" class="number">THUMOS14</th><th scope="col" class="number">ActivityNet v1.3</th><th scope="col" class="number">HACS-Segment</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">AdaTAD <span data-en="(full fine-tuning)" data-zh="（全量微调）" class="method-setting">(full fine-tuning)</span></th><td class="feature-cell">VideoMAEv2-g</td><td class="number">76.9</td><td class="number">41.9</td><td class="number" aria-label="Not reported">—</td></tr>
+            <tr><th scope="row">ActionFormer</th><td class="feature-cell">InternVideo2</td><td class="number">71.9</td><td class="number">41.2</td><td class="number">43.3</td></tr>
+            <tr><th scope="row">ActionMamba</th><td class="feature-cell">InternVideo2</td><td class="number">72.7</td><td class="number">42.0</td><td class="number">44.6</td></tr>
+            <tr><th scope="row">TadTR</th><td class="feature-cell">InternVideo2</td><td class="number">67.3</td><td class="number">38.2</td><td class="number">37.8</td></tr>
+            <tr><th scope="row">TE-TAD</th><td class="feature-cell">InternVideo2</td><td class="number">70.3</td><td class="number">41.1</td><td class="number">44.1</td></tr>
+            <tr><th scope="row">DiGIT</th><td class="feature-cell">InternVideo2</td><td class="number">73.8</td><td class="number">42.0</td><td class="number">45.5</td></tr>
+            <tr class="ours"><th scope="row">HyrCap</th><td class="feature-cell">InternVideo2 + V-JEPA2</td><td class="number">75.6</td><td class="number">43.3</td><td class="number">47.1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-en="Average mAP uses tIoU 0.3–0.7 (step 0.1) for THUMOS14 and 0.5–0.95 (step 0.05) for ActivityNet v1.3 and HACS-Segment. These are class-specific detection results, not category-agnostic localization AP." data-zh="THUMOS14 的平均 mAP 取 tIoU 0.3–0.7（步长 0.1）；ActivityNet v1.3 与 HACS-Segment 取 0.5–0.95（步长 0.05）。此处为类别相关检测结果，不是类别无关定位 AP。" class="table-note">Average mAP uses tIoU 0.3–0.7 (step 0.1) for THUMOS14 and 0.5–0.95 (step 0.05) for ActivityNet v1.3 and HACS-Segment. These are class-specific detection results, not category-agnostic localization AP.</p>
+      <p data-en="AdaTAD uses full fine-tuning; the other listed THUMOS14 and ActivityNet v1.3 results use frozen encoders. A dash indicates a result not reported in these tables." data-zh="AdaTAD 采用全量微调，其余所列 THUMOS14 与 ActivityNet v1.3 结果采用冻结编码器的设置。横线表示上述论文表格未报告该项结果。" class="table-note">AdaTAD uses full fine-tuning; the other listed THUMOS14 and ActivityNet v1.3 results use frozen encoders. A dash indicates a result not reported in these tables.</p>
+
+      <details class="result-details">
+        <summary><span data-en="HyrCap results at individual tIoU thresholds" data-zh="HyrCap 在不同 tIoU 阈值下的结果">HyrCap results at individual tIoU thresholds</span></summary>
+        <div class="table-scroll" role="region" aria-labelledby="thumos-caption" tabindex="0">
+          <table id="thumos-thresholds" class="results-table">
+            <caption id="thumos-caption">THUMOS14 · mAP (%)</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col" class="number">0.3</th><th scope="col" class="number">0.4</th><th scope="col" class="number">0.5</th><th scope="col" class="number">0.6</th><th scope="col" class="number">0.7</th><th scope="col" class="number">Avg.</th></tr></thead>
+            <tbody><tr class="ours"><th scope="row">HyrCap</th><td class="number">88.1</td><td class="number">86.7</td><td class="number">79.1</td><td class="number">69.5</td><td class="number">54.6</td><td class="number">75.6</td></tr></tbody>
+          </table>
+        </div>
+        <div class="table-scroll" role="region" aria-labelledby="other-threshold-caption" tabindex="0">
+          <table id="other-thresholds" class="results-table">
+            <caption id="other-threshold-caption">ActivityNet v1.3 / HACS-Segment · mAP (%)</caption>
+            <thead><tr><th scope="col"><span data-en="Dataset" data-zh="数据集">Dataset</span></th><th scope="col" class="number">0.5</th><th scope="col" class="number">0.75</th><th scope="col" class="number">0.95</th><th scope="col" class="number">Avg.</th></tr></thead>
+            <tbody><tr><th scope="row">ActivityNet v1.3</th><td class="number">64.4</td><td class="number">44.0</td><td class="number">11.4</td><td class="number">43.3</td></tr><tr><th scope="row">HACS-Segment</th><td class="number">62.7</td><td class="number">48.8</td><td class="number">17.9</td><td class="number">47.1</td></tr></tbody>
+          </table>
+        </div>
+      </details>
+
+      <details class="result-details">
+        <summary><span data-en="Controlled comparison of fusion and calibration strategies" data-zh="融合与校准策略的受控对比">Controlled comparison of fusion and calibration strategies</span></summary>
+        <p data-en="Identical InternVideo2 and V-JEPA2 proposal inputs, proposal budget, score normalization, Top-K, NMS threshold, and evaluation protocol. THUMOS14 results from Table 4." data-zh="使用相同的 InternVideo2 与 V-JEPA2 候选输入、候选预算、分数归一化、Top-K、NMS 阈值及评测协议。以下为论文表 4 的 THUMOS14 结果。" class="detail-intro">Identical InternVideo2 and V-JEPA2 proposal inputs, proposal budget, score normalization, Top-K, NMS threshold, and evaluation protocol. THUMOS14 results from Table 4.</p>
+        <div class="table-scroll" role="region" aria-labelledby="fusion-caption" tabindex="0">
+          <table id="fusion-results" class="results-table" data-source-table="4" data-source-page="11">
+            <caption id="fusion-caption"><span data-en="Fusion and calibration comparison (%)" data-zh="融合与校准策略对比（%）">Fusion and calibration comparison (%)</span></caption>
+            <thead><tr><th scope="col"><span data-en="Method" data-zh="方法">Method</span></th><th scope="col" class="number">AP@0.3</th><th scope="col" class="number">AP@0.5</th><th scope="col" class="number">AP@0.7</th><th scope="col" class="number">Avg. mAP</th></tr></thead>
+            <tbody><tr><th scope="row">Direct Union + NMS</th><td class="number">80.9</td><td class="number">72.2</td><td class="number">48.2</td><td class="number">68.2</td></tr><tr><th scope="row">Score Average</th><td class="number">81.8</td><td class="number">72.6</td><td class="number">48.4</td><td class="number">68.6</td></tr><tr><th scope="row">Max-Score Fusion</th><td class="number">80.5</td><td class="number">71.1</td><td class="number">45.7</td><td class="number">66.8</td></tr><tr><th scope="row">Temporal WBF</th><td class="number">83.8</td><td class="number">75.2</td><td class="number">50.8</td><td class="number">71.1</td></tr><tr><th scope="row">Fixed Consensus</th><td class="number">87.3</td><td class="number">78.0</td><td class="number">53.8</td><td class="number">74.1</td></tr><tr class="ours"><th scope="row">HyrCap</th><td class="number">88.1</td><td class="number">79.1</td><td class="number">54.6</td><td class="number">75.6</td></tr></tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="staged-evaluation" aria-labelledby="staged-title">
+      <h2 data-en="Staged Semantic Evaluation" data-zh="分阶段语义评测" id="staged-title">Staged Semantic Evaluation</h2>
+      <p data-en="Temporal localization, segment-level classification, and joint event understanding are evaluated separately on THUMOS14." data-zh="在 THUMOS14 上分别评估时序定位、片段级分类和联合事件理解。" class="section-intro">Temporal localization, segment-level classification, and joint event understanding are evaluated separately on THUMOS14.</p>
+      <figure class="paper-figure" data-source-page="11" data-source-figure="4">
+        <a href="assets/paper-staged-evaluation.png" target="_blank" rel="noopener" aria-label="View full-size staged evaluation figure">
+          <img src="assets/paper-staged-evaluation.png" width="1269" height="546" loading="lazy" alt="Paper Figure 4. For DiGIT, localization mAP increases from 77.6 to 80.3, classification mAP from 91.5 to 91.8, and comprehensive mAP from 74.0 to 75.8. For TE-TAD, the corresponding values change from 76.2 to 79.1, 91.1 to 91.3, and 70.5 to 71.3.">
+        </a>
+        <figcaption data-en="Figure 4. Localization is category-agnostic; joint evaluation requires both a correct temporal match and a correct semantic prediction. This staged protocol is distinct from the standard detection benchmark above." data-zh="论文图 4。定位评测不区分类别；联合评测要求时间段匹配和语义预测同时正确。这一分阶段协议与上方的标准检测评测不同。">Figure 4. Localization is category-agnostic; joint evaluation requires both a correct temporal match and a correct semantic prediction. This staged protocol is distinct from the standard detection benchmark above.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="qualitative" aria-labelledby="qualitative-title">
+      <h2 data-en="Qualitative Comparison" data-zh="定性结果对比" id="qualitative-title">Qualitative Comparison</h2>
+      <figure class="paper-figure" data-source-page="12" data-source-figure="5">
+        <a href="assets/paper-qualitative.png" target="_blank" rel="noopener" aria-label="View full-size qualitative comparison">
+          <img src="assets/paper-qualitative.png" width="1326" height="645" loading="lazy" alt="Paper Figure 5 compares ground-truth segments, DiGIT proposals, HyrCap proposals, and the top ten ranked candidates for a representative video.">
+        </a>
+        <figcaption data-en="Figure 5. Temporal proposals and their top-10 ranking on a representative video, comparing the baseline detector with HyrCap." data-zh="论文图 5。对比基线检测器与 HyrCap 在代表视频中的时序候选及 Top-10 排序。">Figure 5. Temporal proposals and their top-10 ranking on a representative video, comparing the baseline detector with HyrCap.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section videos-section" id="videos" aria-labelledby="videos-title">
+      <h2 data-en="Video Demonstrations" data-zh="视频展示" id="videos-title">Video Demonstrations</h2>
+      <p data-en="Selected video segments and event descriptions from THUMOS14." data-zh="THUMOS14 中的视频片段与事件描述。" class="section-intro">Selected video segments and event descriptions from THUMOS14.</p>
+      <section class="video-group" aria-labelledby="basketball-title">
+        <h3 data-en="Basketball" data-zh="篮球" id="basketball-title">Basketball</h3>
+        <div class="video-grid">
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/basketball-event-10.jpg" aria-label="Number 24 jumps for a dunk" data-label-en="Number 24 jumps for a dunk" data-label-zh="球员跳起扣篮">
+              <source src="assets/basketball-event-10.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">01:47.96 – 01:51.21</span>
+              <h4 data-en="Number 24 jumps for a dunk" data-zh="球员跳起扣篮">Number 24 jumps for a dunk</h4>
+              <p data-en="A player in a yellow number 24 jersey jumps and dunks the ball while a player in a white number 6 jersey reaches up to contest. The basket and spectators are visible behind them." data-zh="一名身穿黄色24号球衣的球员跳起，将球扣入篮筐，另一名身穿白色6号球衣的球员在旁伸手试图封盖。背景中可见观众席和篮球架。">A player in a yellow number 24 jersey jumps and dunks the ball while a player in a white number 6 jersey reaches up to contest. The basket and spectators are visible behind them.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/basketball-event-9.jpg" aria-label="Player completes a two-handed dunk" data-label-en="Player completes a two-handed dunk" data-label-zh="球员完成扣篮动作">
+              <source src="assets/basketball-event-9.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">01:36.46 – 01:37.65</span>
+              <h4 data-en="Player completes a two-handed dunk" data-zh="球员完成扣篮动作">Player completes a two-handed dunk</h4>
+              <p data-en="A player in white leaps high and dunks the ball with both hands, then lands and stands holding the ball. The indoor arena is full, with other players and advertising boards along the court." data-zh="一名身穿白色球衣的球员高高跃起，双手持球完成扣篮，随后落地并持球站立。背景为室内体育馆，观众席满座，场边有其他球员和广告牌。">A player in white leaps high and dunks the ball with both hands, then lands and stands holding the ball. The indoor arena is full, with other players and advertising boards along the court.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/basketball-event-12.jpg" aria-label="Player scores over a defender" data-label-en="Player scores over a defender" data-label-zh="球员跳起投篮">
+              <source src="assets/basketball-event-12.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">02:11.95 – 02:15.22</span>
+              <h4 data-en="Player scores over a defender" data-zh="球员跳起投篮">Player scores over a defender</h4>
+              <p data-en="A player in red jumps beneath the basket and shoots while a defender in white reaches up to block. The ball travels through the air and enters the net." data-zh="一名穿红色球衣的球员在篮下跳起，将球投向篮筐，另一名穿白色球衣的球员在下方伸手试图封盖。球在空中飞行，随后进入篮网。">A player in red jumps beneath the basket and shoots while a defender in white reaches up to block. The ball travels through the air and enters the net.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="video-group" aria-labelledby="cricket-title">
+        <h3 data-en="Cricket" data-zh="板球" id="cricket-title">Cricket</h3>
+        <div class="video-grid two-videos">
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/cricket-event-1.jpg" aria-label="Batter swings at the ball" data-label-en="Batter swings at the ball" data-label-zh="击球手挥动球棒击球">
+              <source src="assets/cricket-event-1.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">00:02.30 – 00:03.16</span>
+              <h4 data-en="Batter swings at the ball" data-zh="击球手挥动球棒击球">Batter swings at the ball</h4>
+              <p data-en="A batter in a blue uniform stands at the crease and swings at a delivery. The bowler, wearing pink, completes the bowling motion while the umpire watches from behind the batter." data-zh="一名身穿蓝色队服的击球手站在球道上，面对投球手投来的球，挥动球棒击球；投球手身穿粉色队服，完成投球动作；裁判站在击球手后方，观察击球过程。">A batter in a blue uniform stands at the crease and swings at a delivery. The bowler, wearing pink, completes the bowling motion while the umpire watches from behind the batter.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/cricket-event-3.jpg" aria-label="Batter swings beside the wicket" data-label-en="Batter swings beside the wicket" data-label-zh="击球手挥动球棒击球">
+              <source src="assets/cricket-event-3.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">00:14.29 – 00:15.87</span>
+              <h4 data-en="Batter swings beside the wicket" data-zh="击球手挥动球棒击球">Batter swings beside the wicket</h4>
+              <p data-en="A batter in blue crouches beside the wicket, holds the bat with both hands, and swings to the right. Another player wearing number 4 stands behind with a bat; spectators and advertising boards are visible in the background." data-zh="一名身穿蓝色队服的击球手在三柱门旁呈蹲姿，双手握棒，随后向右侧挥动球棒击球；另一名背号为4的球员站在其后方，手持球棒，面向击球手方向。背景中可见观众席和广告牌。">A batter in blue crouches beside the wicket, holds the bat with both hands, and swings to the right. Another player wearing number 4 stands behind with a bat; spectators and advertising boards are visible in the background.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="video-group" aria-labelledby="weightlifting-title">
+        <h3 data-en="Weightlifting" data-zh="举重" id="weightlifting-title">Weightlifting</h3>
+        <div class="video-grid">
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/weightlifting-event-1.jpg" aria-label="Female athlete completes an overhead lift" data-label-en="Female athlete completes an overhead lift" data-label-zh="女子举重运动员完成抓举动作">
+              <source src="assets/weightlifting-event-1.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">00:07.86 – 00:20.54</span>
+              <h4 data-en="Female athlete completes an overhead lift" data-zh="女子举重运动员完成抓举动作">Female athlete completes an overhead lift</h4>
+              <p data-en="In a warehouse-like training area, a woman grips a barbell on the floor, lifts it to her chest, drives it overhead, and stands upright while stabilizing the weight." data-zh="一名女子在仓库式场地中，弯腰抓握杠铃，随后将杠铃从地面拉起至胸前，再迅速上举至头顶上方，完成抓举动作，最后站直身体并保持杠铃稳定。">In a warehouse-like training area, a woman grips a barbell on the floor, lifts it to her chest, drives it overhead, and stands upright while stabilizing the weight.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/weightlifting-event-4.jpg" aria-label="Male athlete performs a clean and overhead lift" data-label-en="Male athlete performs a clean and overhead lift" data-label-zh="男子举重">
+              <source src="assets/weightlifting-event-4.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">00:54.49 – 01:00.69</span>
+              <h4 data-en="Male athlete performs a clean and overhead lift" data-zh="男子举重">Male athlete performs a clean and overhead lift</h4>
+              <p data-en="A man grips a barbell in a gym, raises it from the floor to his shoulders, presses it overhead, and finally lowers it." data-zh="一名男子在健身房内弯腰抓握杠铃，随后将杠铃从地面举起至肩部，再向上推举过头顶，最后放下杠铃。">A man grips a barbell in a gym, raises it from the floor to his shoulders, presses it overhead, and finally lowers it.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/weightlifting-event-8.jpg" aria-label="Female athlete performs an overhead lift" data-label-en="Female athlete performs an overhead lift" data-label-zh="女子举重运动员完成抓举动作">
+              <source src="assets/weightlifting-event-8.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">02:17.88 – 02:29.84</span>
+              <h4 data-en="Female athlete performs an overhead lift" data-zh="女子举重运动员完成抓举动作">Female athlete performs an overhead lift</h4>
+              <p data-en="A woman pulls a barbell from the floor to her shoulders, presses it overhead, and lowers it. Wooden boxes and a seated observer are visible behind her." data-zh="一名女子在室内训练场地进行举重，她弯腰抓握杠铃，随后将杠铃从地面拉起至肩部，再向上推举过头顶，最后放下杠铃。背景中有木箱和另一名坐在箱子上的人。">A woman pulls a barbell from the floor to her shoulders, presses it overhead, and lowers it. Wooden boxes and a seated observer are visible behind her.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="video-group" aria-labelledby="hammer-title">
+        <h3 data-en="Hammer throw" data-zh="链球" id="hammer-title">Hammer throw</h3>
+        <div class="video-grid">
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/hammer-event-2.jpg" aria-label="Athlete rotates inside the throwing area" data-label-en="Athlete rotates inside the throwing area" data-label-zh="运动员在场地内进行旋转动作">
+              <source src="assets/hammer-event-2.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">00:23.75 – 00:32.91</span>
+              <h4 data-en="Athlete rotates inside the throwing area" data-zh="运动员在场地内进行旋转动作">Athlete rotates inside the throwing area</h4>
+              <p data-en="An athlete accelerates through several rotations in a circular area with both arms extended, then continues turning while adjusting posture. A protective cage and spectators surround the field." data-zh="一名运动员在圆形区域内进行旋转动作，身体逐渐加速旋转，双臂展开，随后继续旋转并调整姿势。周围有防护网和观众席，场地为沙土质地，背景中可见其他人员站立或移动。">An athlete accelerates through several rotations in a circular area with both arms extended, then continues turning while adjusting posture. A protective cage and spectators surround the field.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/hammer-event-4.jpg" aria-label="Athlete rotates and throws" data-label-en="Athlete rotates and throws" data-label-zh="运动员在圆形场地内旋转并投掷物体">
+              <source src="assets/hammer-event-4.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">01:13.06 – 01:19.95</span>
+              <h4 data-en="Athlete rotates and throws" data-zh="运动员在圆形场地内旋转并投掷物体">Athlete rotates and throws</h4>
+              <p data-en="An athlete stands in the center of a circular area, rotates while holding an implement, and then releases it forward. A protective cage, track, and spectators are visible around the venue." data-zh="一名运动员站在圆形场地中央，手持物体，进行旋转动作，随后向前投掷。场地周围有防护网，背景可见跑道和观众。">An athlete stands in the center of a circular area, rotates while holding an implement, and then releases it forward. A protective cage, track, and spectators are visible around the venue.</p>
+            </figcaption>
+          </figure>
+          <figure class="video-example">
+            <video controls playsinline muted preload="metadata" poster="assets/hammer-event-8.jpg" aria-label="Athlete throws from inside the circle" data-label-en="Athlete throws from inside the circle" data-label-zh="运动员在投掷圈内准备投掷">
+              <source src="assets/hammer-event-8.mp4" type="video/mp4">
+            </video>
+            <figcaption>
+              <span class="event-time">03:14.39 – 03:19.55</span>
+              <h4 data-en="Athlete throws from inside the circle" data-zh="运动员在投掷圈内准备投掷">Athlete throws from inside the circle</h4>
+              <p data-en="A woman in a white top and dark shorts stands inside the throwing circle, rotates, swings her arms, adjusts her stance, and releases the implement. The stadium and protective cage are visible around her." data-zh="一名运动员站在圆形投掷圈内，背对镜头，穿着白色背心和深色短裤，脚穿运动鞋。她双手持物体，进行投掷前的准备动作，包括身体旋转、手臂摆动和调整姿势，随后将物体投出。背景为大型体育场，观众席可见，场地被防护网围住。">A woman in a white top and dark shorts stands inside the throwing circle, rotates, swings her arms, adjusts her stance, and releases the implement. The stadium and protective cage are visible around her.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <span>HyrCap</span>
+    <a href="https://github.com/ZGCA-HMI-Lab/HyrCap" target="_blank" rel="noopener noreferrer"><span data-en="Code" data-zh="代码">Code</span></a>
+    <a href="https://github.com/ZGCA-HMI-Lab" target="_blank" rel="noopener noreferrer">ZGCA–HMI Lab</a>
+  </footer>
+</body>
+</html>

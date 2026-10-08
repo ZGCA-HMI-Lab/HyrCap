@@ -1,0 +1,1 @@
+"""HyrCap model package."""

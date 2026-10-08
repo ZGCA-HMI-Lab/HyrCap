@@ -1,0 +1,6 @@
+# Install a hardware-compatible PyTorch build first; retain vendor builds on PPU.
+torch==2.6.0
+numpy==1.26.0
+pandas==2.2.3
+scipy==1.14.1
+huggingface_hub>=0.36

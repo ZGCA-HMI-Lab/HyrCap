@@ -3,7 +3,7 @@
 This repository contains the official implementation of the paper HyrCap: Hybrid Rank-Calibration of Action
 Proposals for Temporal Event Understanding.
 
-[project page](https://zgca-hmi-lab.github.io/HyrCap/).
+[[project page](https://zgca-hmi-lab.github.io/HyrCap/)].
 
 
 ![HyrCap](assets/hyrcap-overview.png)

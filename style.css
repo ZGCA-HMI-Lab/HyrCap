@@ -80,7 +80,8 @@ figure { margin: 0; }
 
 sup { font-size: .65em; line-height: 0; }
 .authors sup { margin-left: 3px; }
-.affiliations { display: flex; justify-content: center; flex-wrap: wrap; column-gap: 18px; row-gap: 2px; max-width: 1020px; margin: 12px auto 0; font-size: 15px; line-height: 1.65; color: #555; }
+.affiliations { max-width: 1020px; margin: 12px auto 0; font-size: 15px; line-height: 1.65; color: #555; }
+.affiliation-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px 18px; }
 .affiliations span { display: inline-block; }
 .paper-header { padding-bottom: 24px; }
 .teaser-section { padding-top: 12px; }

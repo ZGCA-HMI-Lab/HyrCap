@@ -16,9 +16,6 @@ button { font: inherit; }
 .skip-link { position: fixed; top: -80px; left: 16px; z-index: 10; padding: 8px 16px; background: #fff; border: 1px solid #252525; }
 .skip-link:focus { top: 12px; }
 .paper-header { position: relative; padding-block: 66px 42px; text-align: center; }
-.language-control { position: absolute; top: 14px; right: 0; }
-.language-control button { border: 0; padding: 6px 10px; background: transparent; color: #656565; cursor: pointer; font-size: 14px; }
-.language-control button:hover { color: #111; text-decoration: underline; }
 h1 { max-width: 1040px; margin: 0 auto 24px; font-size: clamp(30px, 3.5vw, 46px); font-weight: 700; line-height: 1.2; letter-spacing: -1px; text-wrap: balance; }
 .paper-name { color: #286b9b; }
 .authors { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 22px; margin: 0 auto 8px; font-size: 20px; }

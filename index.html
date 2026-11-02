@@ -8,23 +8,25 @@
   <meta property="og:title" content="HyrCap: Hybrid Rank-Calibration of Action Proposals for Temporal Event Understanding">
   <meta property="og:description" content="Method overview and video demonstrations of HyrCap.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://zgca-hmi-lab.github.io/HyrCap/assets/paper-overview.png">
+  <meta property="og:image" content="https://zgca-hmi-lab.github.io/HyrCap/assets/paper-overview-20261102.png">
   <meta property="og:url" content="https://zgca-hmi-lab.github.io/HyrCap/">
   <link rel="canonical" href="https://zgca-hmi-lab.github.io/HyrCap/">
   <title>HyrCap</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=20261102">
   <script src="app.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="paper-header container">
     <h1><span class="paper-name">HyrCap:</span> Hybrid Rank-Calibration of Action Proposals for Temporal Event Understanding</h1>
-    <p class="authors"><span>Rui Chen<sup>1</sup></span><span>Xingyu Chen<sup>2</sup></span><span>Pengxin Xu<sup>4,2</sup></span><span>Kai Chen<sup>3,2</sup></span><span>Junzhi Yu<sup>1</sup></span></p>
+    <p class="authors"><span>Rui Chen<sup>1</sup></span><span>Xingyu Chen<sup>2,✉,*</sup></span><span>Pengxin Xu<sup>4,2</sup></span><span>Kai Chen<sup>3,2</sup></span><span>Junzhi Yu<sup>1,✉</sup></span></p>
     <div class="affiliations">
       <div class="affiliation-row"><span><sup>1</sup> Peking University</span><span><sup>2</sup> Zhongguancun Academy</span></div>
       <div class="affiliation-row"><span><sup>3</sup> Zhongguancun Institute of Artificial Intelligence</span><span><sup>4</sup> Harbin Institute of Technology, Shenzhen</span></div>
     </div>
+    <p class="author-notes"><span>* Project leader.</span> <span>✉ Corresponding author.</span></p>
+    <p class="author-contact"><a href="mailto:chenruiii@stu.pku.edu.cn">chenruiii@stu.pku.edu.cn</a><a href="mailto:chenxingyu@bza.edu.cn">chenxingyu@bza.edu.cn</a></p>
     <p class="venue">NeurIPS 2026</p>
     <nav class="paper-links" aria-label="Project links">
       <a href="https://github.com/ZGCA-HMI-Lab/HyrCap" target="_blank" rel="noopener noreferrer">
@@ -42,11 +44,11 @@
   <main id="main" class="container">
 
     <section class="section teaser-section" aria-label="HyrCap overview">
-      <figure class="paper-figure teaser-figure" data-source-page="1" data-source-figure="1">
-        <a href="assets/paper-overview.png" target="_blank" rel="noopener" aria-label="View full-size overview">
-          <img src="assets/paper-overview.png" width="1344" height="447" alt="HyrCap and a conventional query-based detector produce temporal proposals for downstream semantic understanding." fetchpriority="high">
+      <figure class="paper-figure teaser-figure" data-source-page="2" data-source-figure="1">
+        <a href="assets/paper-overview-20261102.png" target="_blank" rel="noopener" aria-label="View full-size overview">
+          <img src="assets/paper-overview-20261102.png" width="1314" height="519" alt="HyrCap calibrates and ranks proposals from a query-based detector, improving proposal quality for subsequent LLM-based semantic understanding." fetchpriority="high">
         </a>
-        <figcaption>HyrCap calibrates dense action proposals to provide more reliable event segments for semantic understanding. Figure 1.</figcaption>
+        <figcaption>Figure 1. Comparison of HyrCap and conventional query-based TAD: HyrCap produces higher-quality temporal proposals that better support subsequent semantic understanding.</figcaption>
       </figure>
     </section>
 
@@ -67,20 +69,21 @@
     <section class="section abstract-section" id="abstract" aria-labelledby="abstract-title">
       <h2 id="abstract-title">Abstract</h2>
       <div class="reading-width">
-        <p>Temporal action detection in long, untrimmed videos is challenged by ambiguous boundaries, inaccurate localization, and redundant proposals. Reliable action proposals are also an important interface between event localization and semantic understanding. HyrCap is a proposal-centric, query-based framework that treats dense predictions as an over-complete set of temporal event hypotheses and calibrates their ranking to better reflect localization reliability and competition between candidates.</p>
-        <p>By combining InternVideo2 and V-JEPA2 representations, HyrCap uses cross-representation consensus, localization quality estimation, and proposal redundancy suppression to improve candidate ranking. Temporal voting refines the boundaries, followed by multi-class non-maximum suppression. We evaluate standard action detection on THUMOS14, ActivityNet v1.3, and HACS-Segment, and introduce a staged protocol that evaluates category-agnostic localization, segment-level semantics, and their joint event-understanding performance separately.</p>
+        <p>Temporal action detection in long untrimmed videos still suffers from inaccurate temporal localization and low-quality proposals, especially under sparse temporal annotations and ambiguous event boundaries. In the context of open-ended video understanding and LLM-driven event analysis, reliable temporal action proposals have emerged as a critical interface bridging temporal localization, event annotation, and semantic understanding. However, conventional temporal action detection (TAD) pipelines lack explicit modeling of proposal localization quality, cross-representation support, and inter-proposal relations, making it difficult to consistently provide high-quality proposals.</p>
+        <p>We propose Hybrid Rank-Calibration of Action Proposals (HyrCap), a proposal-centric query-based TAD framework for temporal event understanding. In HyrCap, Hybrid denotes the use of complementary video features that provide different temporal localization cues, while Rank-Calibration refers to calibrating the ranking confidence of dense action proposals so that it better reflects proposal localization reliability and candidate competition. HyrCap treats dense query-based predictions as an over-complete temporal event hypothesis space and improves the ranking reliability, localization quality, and candidate discrimination of action proposals through modules such as Cross-Representation Consensus Calibration, Localization Quality Estimation, and Proposal Duplication Suppression.</p>
+        <p>Furthermore, inspired by the strong capability of LLMs in fine-grained semantic recognition, event description, and reasoning, we introduce HyrCap for Semantic Action Understanding: calibrated proposals can be used for standard TAD detection and as inputs for LLM-based semantic understanding. We further define a staged evaluation protocol to separately measure event localization ability, segment-level semantic understanding, and their combined event understanding performance. Experiments on public benchmarks show that HyrCap achieves state-of-the-art performance across multiple metrics and provides a more fine-grained paradigm and evaluation protocol for query-based event segmentation and annotation.</p>
       </div>
     </section>
 
     <section class="section method-section" id="method" aria-labelledby="method-title">
       <h2 id="method-title">Method Overview</h2>
-      <figure class="architecture" data-source-page="6" data-source-figure="3">
-        <a href="assets/paper-method.png" target="_blank" rel="noopener" aria-label="View full-size HyrCap architecture">
-          <img src="assets/paper-method.png" width="1467" height="1017" alt="HyrCap architecture: candidate generation, cross-representation consensus calibration, localization quality estimation, proposal redundant suppression, and temporal event understanding." loading="lazy">
+      <figure class="architecture" data-source-page="5" data-source-figure="3">
+        <a href="assets/paper-method-20261102.png" target="_blank" rel="noopener" aria-label="View full-size HyrCap architecture">
+          <img src="assets/paper-method-20261102.png" width="1635" height="1137" alt="HyrCap architecture: candidate generation, cross-representation consensus calibration, localization quality estimation, proposal duplication suppression, and temporal event understanding." loading="lazy">
         </a>
         <figcaption>
           <strong>HyrCap architecture.</strong>
-          <span>HyrCap combines cross-representation consensus calibration, localization quality estimation, proposal redundancy suppression, and temporal boundary refinement. Figure 3.</span>
+          <span>Figure 3. (a) Query-based event candidate generation with InternVideo2 and V-JEPA2 representations. (b) HyrCap calibrates and refines dense proposals through cross-representation consensus calibration, localization quality estimation, proposal duplication suppression, and post-processing. (c) Conventional one-stage loc-cls detection protocol. (d) Two-stage loc-first protocol for staged semantic understanding. Loc denotes localization.</span>
         </figcaption>
       </figure>
     </section>
@@ -90,12 +93,12 @@
       <h2 id="results-title">Main Results</h2>
       <p class="section-intro">Class-specific temporal action detection. Selected comparisons reported in Tables 1–2 of the paper.</p>
       <div class="table-scroll" role="region" aria-labelledby="benchmark-caption" tabindex="0">
-        <table id="benchmark-results" class="results-table" data-source-tables="1,2" data-source-pages="8,9">
+        <table id="benchmark-results" class="results-table" data-source-tables="1,2" data-source-pages="7,8">
           <caption id="benchmark-caption"><span>Average detection mAP (%)</span></caption>
           <thead><tr><th scope="col"><span>Method</span></th><th scope="col"><span>Features</span></th><th scope="col" class="number">THUMOS14</th><th scope="col" class="number">ActivityNet v1.3</th><th scope="col" class="number">HACS-Segment</th></tr></thead>
           <tbody>
             <tr><th scope="row">AdaTAD <span class="method-setting">(full fine-tuning)</span></th><td class="feature-cell">VideoMAEv2-g</td><td class="number">76.9</td><td class="number">41.9</td><td class="number" aria-label="Not reported">—</td></tr>
-            <tr><th scope="row">ActionFormer</th><td class="feature-cell">InternVideo2</td><td class="number">71.9</td><td class="number">41.2</td><td class="number">43.3</td></tr>
+            <tr><th scope="row">ActionFormer</th><td class="feature-cell">InternVideo2</td><td class="number">71.1</td><td class="number">41.2</td><td class="number">43.3</td></tr>
             <tr><th scope="row">ActionMamba</th><td class="feature-cell">InternVideo2</td><td class="number">72.7</td><td class="number">42.0</td><td class="number">44.6</td></tr>
             <tr><th scope="row">TadTR</th><td class="feature-cell">InternVideo2</td><td class="number">67.3</td><td class="number">38.2</td><td class="number">37.8</td></tr>
             <tr><th scope="row">TE-TAD</th><td class="feature-cell">InternVideo2</td><td class="number">70.3</td><td class="number">41.1</td><td class="number">44.1</td></tr>
@@ -110,14 +113,14 @@
       <details class="result-details">
         <summary><span>HyrCap results at individual tIoU thresholds</span></summary>
         <div class="table-scroll" role="region" aria-labelledby="thumos-caption" tabindex="0">
-          <table id="thumos-thresholds" class="results-table">
+          <table id="thumos-thresholds" class="results-table" data-source-table="1" data-source-page="7">
             <caption id="thumos-caption">THUMOS14 · mAP (%)</caption>
             <thead><tr><th scope="col">Method</th><th scope="col" class="number">0.3</th><th scope="col" class="number">0.4</th><th scope="col" class="number">0.5</th><th scope="col" class="number">0.6</th><th scope="col" class="number">0.7</th><th scope="col" class="number">Avg.</th></tr></thead>
-            <tbody><tr class="ours"><th scope="row">HyrCap</th><td class="number">88.1</td><td class="number">86.7</td><td class="number">79.1</td><td class="number">69.5</td><td class="number">54.6</td><td class="number">75.6</td></tr></tbody>
+            <tbody><tr class="ours"><th scope="row">HyrCap</th><td class="number">88.1</td><td class="number">85.2</td><td class="number">79.1</td><td class="number">70.8</td><td class="number">54.6</td><td class="number">75.6</td></tr></tbody>
           </table>
         </div>
         <div class="table-scroll" role="region" aria-labelledby="other-threshold-caption" tabindex="0">
-          <table id="other-thresholds" class="results-table">
+          <table id="other-thresholds" class="results-table" data-source-tables="1,2" data-source-pages="7,8">
             <caption id="other-threshold-caption">ActivityNet v1.3 / HACS-Segment · mAP (%)</caption>
             <thead><tr><th scope="col"><span>Dataset</span></th><th scope="col" class="number">0.5</th><th scope="col" class="number">0.75</th><th scope="col" class="number">0.95</th><th scope="col" class="number">Avg.</th></tr></thead>
             <tbody><tr><th scope="row">ActivityNet v1.3</th><td class="number">64.4</td><td class="number">44.0</td><td class="number">11.4</td><td class="number">43.3</td></tr><tr><th scope="row">HACS-Segment</th><td class="number">62.7</td><td class="number">48.8</td><td class="number">17.9</td><td class="number">47.1</td></tr></tbody>
@@ -129,7 +132,7 @@
         <summary><span>Controlled comparison of fusion and calibration strategies</span></summary>
         <p class="detail-intro">Identical InternVideo2 and V-JEPA2 proposal inputs, proposal budget, score normalization, Top-K, NMS threshold, and evaluation protocol. THUMOS14 results from Table 4.</p>
         <div class="table-scroll" role="region" aria-labelledby="fusion-caption" tabindex="0">
-          <table id="fusion-results" class="results-table" data-source-table="4" data-source-page="11">
+          <table id="fusion-results" class="results-table" data-source-table="4" data-source-page="9">
             <caption id="fusion-caption"><span>Fusion and calibration comparison (%)</span></caption>
             <thead><tr><th scope="col"><span>Method</span></th><th scope="col" class="number">AP@0.3</th><th scope="col" class="number">AP@0.5</th><th scope="col" class="number">AP@0.7</th><th scope="col" class="number">Avg. mAP</th></tr></thead>
             <tbody><tr><th scope="row">Direct Union + NMS</th><td class="number">80.9</td><td class="number">72.2</td><td class="number">48.2</td><td class="number">68.2</td></tr><tr><th scope="row">Score Average</th><td class="number">81.8</td><td class="number">72.6</td><td class="number">48.4</td><td class="number">68.6</td></tr><tr><th scope="row">Max-Score Fusion</th><td class="number">80.5</td><td class="number">71.1</td><td class="number">45.7</td><td class="number">66.8</td></tr><tr><th scope="row">Temporal WBF</th><td class="number">83.8</td><td class="number">75.2</td><td class="number">50.8</td><td class="number">71.1</td></tr><tr><th scope="row">Fixed Consensus</th><td class="number">87.3</td><td class="number">78.0</td><td class="number">53.8</td><td class="number">74.1</td></tr><tr class="ours"><th scope="row">HyrCap</th><td class="number">88.1</td><td class="number">79.1</td><td class="number">54.6</td><td class="number">75.6</td></tr></tbody>
@@ -140,22 +143,22 @@
 
     <section class="section" id="staged-evaluation" aria-labelledby="staged-title">
       <h2 id="staged-title">Staged Semantic Evaluation</h2>
-      <p class="section-intro">Temporal localization, segment-level classification, and joint event understanding are evaluated separately on THUMOS14.</p>
-      <figure class="paper-figure" data-source-page="11" data-source-figure="4">
-        <a href="assets/paper-staged-evaluation.png" target="_blank" rel="noopener" aria-label="View full-size staged evaluation figure">
-          <img src="assets/paper-staged-evaluation.png" width="1269" height="546" loading="lazy" alt="Paper Figure 4. For DiGIT, localization mAP increases from 77.6 to 80.3, classification mAP from 91.5 to 91.8, and comprehensive mAP from 74.0 to 75.8. For TE-TAD, the corresponding values change from 76.2 to 79.1, 91.1 to 91.3, and 70.5 to 71.3.">
+      <p class="section-intro">Temporal localization, segment-level semantic understanding, and joint event understanding are evaluated separately on THUMOS14 with InternVideo2 features.</p>
+      <figure class="paper-figure" data-source-page="9" data-source-figure="4">
+        <a href="assets/paper-staged-evaluation-20261102.png" target="_blank" rel="noopener" aria-label="View full-size staged evaluation figure">
+          <img src="assets/paper-staged-evaluation-20261102.png" width="1254" height="546" loading="lazy" alt="Paper Figure 4. For DiGIT, localization mAP increases from 77.6 to 80.3, classification mAP from 91.5 to 91.8, and comprehensive mAP from 74.0 to 75.8. For TE-TAD, the corresponding values change from 76.2 to 79.1, 91.1 to 91.3, and 70.5 to 71.3.">
         </a>
-        <figcaption>Figure 4. Localization is category-agnostic; joint evaluation requires both a correct temporal match and a correct semantic prediction. This staged protocol is distinct from the standard detection benchmark above.</figcaption>
+        <figcaption>Figure 4. Two-Stage Evaluation. Localization is category-agnostic. After class-agnostic NMS, selected event segments are mapped through a trained projector and passed to Qwen3-14B for semantic prediction. Joint evaluation requires a match to an unmatched ground-truth instance at the required tIoU and a correct semantic prediction. Proposals are ranked by calibrated localization scores, without using semantic confidence. This staged protocol is distinct from the standard detection benchmark above.</figcaption>
       </figure>
     </section>
 
     <section class="section" id="qualitative" aria-labelledby="qualitative-title">
       <h2 id="qualitative-title">Qualitative Comparison</h2>
-      <figure class="paper-figure" data-source-page="12" data-source-figure="5">
-        <a href="assets/paper-qualitative.png" target="_blank" rel="noopener" aria-label="View full-size qualitative comparison">
-          <img src="assets/paper-qualitative.png" width="1326" height="645" loading="lazy" alt="Paper Figure 5 compares ground-truth segments, DiGIT proposals, HyrCap proposals, and the top ten ranked candidates for a representative video.">
+      <figure class="paper-figure" data-source-page="10" data-source-figure="5">
+        <a href="assets/paper-qualitative-20261102.png" target="_blank" rel="noopener" aria-label="View full-size qualitative comparison">
+          <img src="assets/paper-qualitative-20261102.png" width="1587" height="708" loading="lazy" alt="Paper Figure 5 compares ground-truth segments, DiGIT proposals, HyrCap proposals, and the top ten ranked candidates for a representative video.">
         </a>
-        <figcaption>Figure 5. Temporal proposals and their top-10 ranking on a representative video, comparing the baseline detector with HyrCap.</figcaption>
+        <figcaption>Figure 5. Qualitative visualization of proposal quality and ranking behavior. HyrCap ranks true positives higher and suppresses duplicate, background, and localization-error false positives compared with the baseline DiGIT detector.</figcaption>
       </figure>
     </section>
 

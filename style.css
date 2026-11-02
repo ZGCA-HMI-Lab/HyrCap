@@ -125,3 +125,11 @@ sup { font-size: .65em; line-height: 0; }
   .table-note { font-size: 12px; }
   .result-details summary { font-size: 14px; }
 }
+
+/* Author roles and contact information from the revised paper. */
+.author-notes { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 4px; color: #656565; font-size: 13px; }
+.author-contact { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 20px; margin: 0; font-size: 14px; }
+.author-contact a { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .author-notes, .author-contact { font-size: 12px; }
+}
